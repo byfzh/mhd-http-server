@@ -3,21 +3,17 @@
 
 <head>
     <title>VSB</title>
-    <link rel="stylesheet" href="./style.css">
+    <!-- <link rel="stylesheet" href="./style.css">  -->
     <script src="./jquery.js"></script>
 </head>
 
 <body>
     <div id="form-container">
-        <div id="result-outlet">
-
-        </div>
         <form id="mainform" class="form" method="POST" name="mainform">
             <div>
-                <label for="key">Key: </label>
-                <input name="key" type="text" id="key" />
-                <label for="value">Value:</label>
-                <input name="value" type="text" id="value"/>
+		<div id="result-outlet">
+
+		</div>
             </div>
             <div>
                 <button type="button" class="btn" id="button_submit">Modify</button>
@@ -29,10 +25,18 @@
     <script>
         $(document).ready(() => {
             function submit() {
-                var key = $("#key").val();
-                var value = $("#value").val();
+		var fe=mainform.elements;
+                var str = '';
+		for(var i=0; i<fe.length; i++) {
+                    var e=fe[i];
+                    if(e.type == 'text') {
+			if(str != '')
+                            str += `&`
+                        str += `${e.name}=${e.value}`;
+                    }
+                }
                 $.ajax({
-                    url:`/param?${key}=${value}`,
+                    url:`/param?${str}`,
                     type: "post"
                 })
             }
@@ -46,7 +50,7 @@
                         var template = '';
                         for (const key in data) {
                             var value = data[key];
-                            template += `<div>${key}:${value}</div>`;
+                            template += `<div><label for=${key}>${key}:</label><input name=${key} type="text" id=${key} value=${value}></div>`
                         }
                         $("#result-outlet").html(template);
                     })
