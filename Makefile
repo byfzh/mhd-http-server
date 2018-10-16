@@ -4,8 +4,8 @@ CFLAGS=-I. -c -Os
 LD=gcc
 LDFLAGS = -L/usr/local/lib
 execute: server
-    ls -l ./server
-    ./server
+	ls -l ./server
+	./server
 
 main.o: main.c
 	$(CC) $(CFLAGS) -o main.o main.c

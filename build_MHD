@@ -1,0 +1,11 @@
+#!/bin/sh
+cd /tmp
+wget https://ftp.gnu.org/gnu/libmicrohttpd/libmicrohttpd-latest.tar.gz \
+    && tar zxvf libmicrohttpd-latest.tar.gz \
+     cd libmicrohttpd-* \
+    && ./configure \
+    && make \
+    && make install 
+#rm /tmp/libmicrohttpd-latest.tar.gz \ 
+#rm /tmp/libmicrohttpd-latest -rf
+ldconfig /usr/local/lib
